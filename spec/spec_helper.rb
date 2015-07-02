@@ -5,7 +5,7 @@ Bundler.setup
 
 require "verbose_hash_fetch"
 require "aws-sdk"
-require "pry"
+require "byebug"
 require "fake_sns/test_integration"
 require "fake_sqs/test_integration"
 

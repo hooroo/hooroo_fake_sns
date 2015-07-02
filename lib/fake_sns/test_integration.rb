@@ -62,7 +62,8 @@ module FakeSNS
 
     def drain(message_id = nil, options = {})
       path = message_id ? "/drain/#{message_id}" : "/drain"
-      default = { aws_config: AWS.config.send(:supplied) }
+      supplied_config = AWS.config.send(:supplied).delete_if{|k,v| k == :logger}
+      default = { aws_config:  supplied_config }
       body = default.merge(options).to_json
       result = connection.post(path, body)
       if result.success?
