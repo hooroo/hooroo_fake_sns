@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fake_sns/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "fake_sns"
+  spec.name          = "hooroo-fake_sns"
   spec.version       = FakeSNS::VERSION
   spec.authors       = ["iain"]
   spec.email         = ["iain@iain.nl"]

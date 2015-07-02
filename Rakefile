@@ -2,6 +2,7 @@ require "bundler/gem_tasks"
 
 require "tempfile"
 require "rspec/core/rake_task"
+require "gem_publisher"
 
 namespace :spec do
 
