@@ -56,6 +56,7 @@ module FakeSNS
         database.each_deliverable_message do |subscription, message|
           DeliverMessage.call(subscription: subscription, message: message, request: request, config: config)
         end
+        database.messages.reset
       end
       200
     end

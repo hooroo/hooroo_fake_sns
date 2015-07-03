@@ -16,6 +16,20 @@ RSpec.describe "Drain messages", :sqs do
       expect(queue.visible_messages).to eq 1
     end
 
+    context "when drain is called twice" do
+      it "does not result in 2 messages in the queue" do
+        topic = sns.topics.create("my-topic")
+        queue = sqs.queues.create("my-queue")
+        topic.subscribe(queue)
+
+        topic.publish("X")
+
+        $fake_sns.drain
+        $fake_sns.drain
+        expect(queue.visible_messages).to eq 1
+      end
+    end
+
     it "works for SQS with a single message" do
       topic = sns.topics.create("my-topic")
       queue = sqs.queues.create("my-queue")
@@ -67,7 +81,6 @@ RSpec.describe "Drain messages", :sqs do
         "Subject"          => nil,
         "Timestamp"        => anything,
         "TopicArn"         => topic.arn,
-        "Type"             => "Notification",
         "UnsubscribeURL"   => "",
       )
 
