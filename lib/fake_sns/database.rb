@@ -50,7 +50,7 @@ module FakeSNS
 
     def each_deliverable_message
       topics.each do |topic|
-        subscriptions.each do |subscription|
+        subscriptions.select{ |subscription| subscription.topic_arn == topic.arn }.each do |subscription|
           messages.each do |message|
             if message.topic_arn == topic.arn
               yield subscription, message
