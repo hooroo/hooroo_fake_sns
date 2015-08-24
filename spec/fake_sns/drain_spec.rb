@@ -30,6 +30,20 @@ RSpec.describe "Drain messages", :sqs do
       end
     end
 
+    it "only publishes to the subscribed queues for a topic" do
+      topic = sns.topics.create("my-topic")
+      other_topic = sns.topics.create("other-topic")
+      queue = sqs.queues.create("my-queue")
+      other_queue = sqs.queues.create("other-queue")
+      topic.subscribe(queue)
+      other_topic.subscribe(other_queue)
+
+      topic.publish("X")
+
+      $fake_sns.drain
+      expect(other_queue.visible_messages).to eq 0
+    end
+
     it "works for SQS with a single message" do
       topic = sns.topics.create("my-topic")
       queue = sqs.queues.create("my-queue")
